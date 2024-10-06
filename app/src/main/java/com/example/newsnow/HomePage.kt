@@ -140,6 +140,9 @@ fun CategoriesBar(newsViewModel: NewsViewModel){
                 trailingIcon = {
                     IconButton(onClick = {
                         isSearchExpanded = false
+                        if (searchQuery.isNotEmpty()){
+                            newsViewModel.fetchEverythingWithQuery(searchQuery)
+                        }
                     }) {
                         Icon(imageVector = Icons.Default.Search , contentDescription = "Search icon" )
                     }
