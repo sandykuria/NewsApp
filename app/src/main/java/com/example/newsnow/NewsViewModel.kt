@@ -20,10 +20,10 @@ class NewsViewModel : ViewModel() {
     }
 
     //Method that will fetch the headlines from the API
-    fun fetchNewsTopHeadlines(){
+    fun fetchNewsTopHeadlines(category : String = "GENERAL"){
         val newsApiClient = NewsApiClient(Constant.apiKey)
 
-        val  request = TopHeadlinesRequest.Builder().language("en").build()
+        val  request = TopHeadlinesRequest.Builder().language("en").category(category).build()
 
         newsApiClient.getTopHeadlines(request, object : NewsApiClient.ArticlesResponseCallback{
             override fun onSuccess(response: ArticleResponse?) {

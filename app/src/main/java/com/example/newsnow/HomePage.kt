@@ -1,5 +1,6 @@
 package com.example.newsnow
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
@@ -9,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
@@ -34,6 +37,8 @@ fun HomePage (newsViewModel: NewsViewModel){
     Column (
         modifier = Modifier.fillMaxSize()
     ){
+        CategoriesBar(newsViewModel)
+
         LazyColumn (
             modifier = Modifier.fillMaxSize()
         ){
@@ -79,6 +84,36 @@ fun ArticleItem(article: Article){
                     fontSize = 14.sp
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun CategoriesBar(newsViewModel: NewsViewModel){
+    val categoriesList = listOf(
+        "GENERAL",
+        "BUSINESS",
+        "ENTERTAINMENT",
+        "HEALTH",
+        "SCIENCE",
+        "SPORTS",
+        "TECHNOLOGY"
+    )
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState()),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        categoriesList.forEach{ category ->
+            Button(onClick = {
+                newsViewModel.fetchNewsTopHeadlines(category)
+            },
+                modifier = Modifier.padding(4.dp)
+                ) {
+                Text(text = category)
+            }
+
         }
     }
 }
